@@ -28,14 +28,14 @@ def contact(request):
         form=FormContact(fname=fname, lname=lname, no=no)
         form.save()
         return HttpResponse(rep_str)
-    return render(request, 'contact.html', context={ 'data':saved})
+    return render(request, 'contact.html', context={'data':saved})
 
 
 def getcontact(request):
     contacts={}
     allc=FormContact.objects.all()
     for i in allc:
-        contacts[i.id]={'fname':i.fname,'lname':i.lname,'no':i.no}
+        contacts[i.id] = {'fname':i.fname,'lname':i.lname,'no':i.no}
     for i in contacts.values():
         print(i)
     return render(request, 'GetContacts.html', context={"contacts":contacts})

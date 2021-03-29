@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Search</title>
+</head>
+<body>
+
+{% if names %}
+<p>You searched for: <strong>{{ query }}</strong></p>
+<p>Found {{ names|length }} name {{ names|pluralize }}.</p>
+<ul>
+{% for name in names %}
+<li>{{ name }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No First Name matched your search criteria.</p>
+{% endif %}
+
+
+{% if error %}
+<ul>
+{% for err in error %}
+<li>{{ err }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<form action="/biosearch/" method="get">
+    Enter a First Name to search:
+<input type="text" name="fname">
+<input type="submit" value="Search">
+</form>
+</body>
+</html>

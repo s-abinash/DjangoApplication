@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from myapp.models import formcontact
-from Blog.models import BlogPortal
+from myapp.models import FormContact
+from myapp.models import BioForm
 from django.template import Context
 from datetime import date, timedelta, datetime
 
@@ -25,7 +25,7 @@ def contact(request):
         lname=request.POST['lname']
         no=request.POST['no']
         rep_str="First Name: "+fname+"<br>Last Name: "+lname+"<br>No: "+no
-        form=formcontact(fname=fname, lname=lname, no=no)
+        form=FormContact(fname=fname, lname=lname, no=no)
         form.save()
         return HttpResponse(rep_str)
     return render(request, 'contact.html', context={ 'data':saved})
@@ -33,7 +33,7 @@ def contact(request):
 
 def getcontact(request):
     contacts={}
-    allc=formcontact.objects.all()
+    allc=FormContact.objects.all()
     for i in allc:
         contacts[i.id]={'fname':i.fname,'lname':i.lname,'no':i.no}
     for i in contacts.values():
@@ -72,14 +72,41 @@ def read_disp(request):
     return HttpResponse(name)
 
 
-def blogcreate(request):
+def bio_insert(request):
+    error = []
+    message = ""
     if request.method == "POST":
-        title = request.POST['title']
-        tags = request.POST['tags']
-        content = request.POST['content']
-        author = request.POST['author']
-        blog = BlogPortal(title=title, tags =tags, content=content, author=author)
-        blog.save()
-    return render(request, 'blogs.html', context={'msg': "Blog Saved Successfully"})
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        age = request.POST['age']
+        print(fname, lname, email, phone,age)
+        if '@' not in email:
+            error.append(" email should have @ ")
+        else:
+            ins = BioForm(fname=fname, lname=lname, email=email, phone=phone, age=age)
+            ins.save()
+            message="Data saved successfully"
+            print("Data saved Successfully")
+    return render(request, 'BioInsert.html', {'error': error, 'message': message})
+
+
+def bio_search(request):
+    error = []
+    q=""
+    if 'fname' in request.GET:
+        q = request.GET['fname']
+    if not q:
+        error.append("Enter a search term ( It can not be empty) ")
+    elif len(q) < 3:
+        error.append(" length can not be lesser than 3")
+    else:
+        name = BioForm.objects.filter(fname=q).values()
+        print("fname...", name)
+        return render(request, 'BioSearch.html', {'names': name, 'query': q})
+
+    return render(request, 'BioSearch.html', {'error': error})
+
 
 

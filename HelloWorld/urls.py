@@ -27,5 +27,7 @@ urlpatterns = [
     path('contact/', views.contact, name="contact_front"),
     path('agecalculation/', views.calculate_age, name="Calulate_age"),
     path('getcontact/', views.getcontact, name="GetContact"),
-    path('blogs/', views.blogcreate),
+    path('bioinsert/', views.bio_insert, name="Bio_Insert"),
+    path('biosearch/', views.bio_search, name="Bio_Search"),
+    # url(r'^search/$', views.bio_search_result),
 ]

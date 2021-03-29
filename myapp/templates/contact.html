@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+</head>
+<body>
+
+    <center>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p><label>First Name:</label><input type="text" name="fname"/></p><br>
+            <p><label>Last Name:</label><input type="text" name="lname"/></p><br>
+            <p><label>Number:</label><input type="text" name="no"/></p><br>
+            <input type="submit" value="Submit">
+        </form>
+
+
+        <br>
+        <b><a href="../getcontact" target="_blank">Get All Contacts</a></b>
+    </center>
+</body>
+</html>

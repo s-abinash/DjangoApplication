@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Age Calculator</title>
+</head>
+<body>
+    <center>
+        <h1>Age Calculator</h1>
+        <br>
+        <h3>{{ age }}</h3><br>
+        <form action="" method="POST">
+            {% csrf_token %}
+        <p>
+            <label>Enter your D.O.B: <input type="date" name="dob"></label>
+        </p>
+        <p>
+            <input type="submit" value="Calculate">
+        </p>
+        </form>
+    </center>
+</body>
+</html>

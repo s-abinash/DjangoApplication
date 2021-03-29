@@ -19,21 +19,24 @@
 <script>alert('{{message}}')</script>
 {% endif %}
 
+
+
 <center>
     <h1>Bio Data Form</h1>
-    <form action="" method="POST">
+    <form action="../bioinsert/" method="POST">
         {% csrf_token %}
         <label for="fname">First name:</label>
-        <input type="text" id="fname" name="fname"><br><br>
+        <input type="text" id="fname" name="fname" value="{{ names.fname }}"><br><br>
         <label for="lname">Last name:</label>
-        <input type="text" id="lname" name="lname"><br><br>
+        <input type="text" id="lname" name="lname" value="{{ names.lname }}"><br><br>
         <label for="Email">Mail:</label>
-        <input type="text" id="lname" name="email"><br><br>
+        <input type="text" id="lname" name="email" value="{{ names.email }}"><br><br>
         <label for="phone">Phone:</label>
-        <input type="text" id="lname" name="phone"><br><br>
+        <input type="text" id="lname" name="phone" value="{{ names.phone }}"><br><br>
         <label for="age">Age:</label>
-        <input type="number" id="age" name="age"><br><br>
-        <input type="submit" value="Submit">
+        <input type="number" id="age" name="age" value="{{ names.age }}"><br><br>
+        <input type="hidden" name="id" value="{{ names.id }}"./>
+        <input type="submit" value="Submit" name="submit">
       </form>
 </center>
 </body>

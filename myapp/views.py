@@ -81,14 +81,20 @@ def bio_insert(request):
         email = request.POST['email']
         phone = request.POST['phone']
         age = request.POST['age']
-        print(fname, lname, email, phone,age)
+        print(fname, lname, email, phone, age)
         if '@' not in email:
             error.append(" email should have @ ")
         else:
-            ins = BioForm(fname=fname, lname=lname, email=email, phone=phone, age=age)
-            ins.save()
-            message="Data saved successfully"
-            print("Data saved Successfully")
+            if request.POST['id']:
+                BioForm.objects.filter(id=request.POST['id']).update(fname=fname, lname=lname, email=email, phone=phone, age=age)
+                message = "Data Updated successfully"
+                print("Data updated Successfully")
+            else:
+                ins = BioForm(fname=fname, lname=lname, email=email, phone=phone, age=age)
+                ins.save()
+                message = "Data saved successfully"
+                print("Data saved Successfully")
+
     return render(request, 'BioInsert.html', {'error': error, 'message': message})
 
 
@@ -97,6 +103,18 @@ def bio_search(request):
     q=""
     if 'fname' in request.GET:
         q = request.GET['fname']
+    elif 'id' in request.GET:
+        q = request.GET['id']
+        print(q)
+        names = BioForm.objects.filter(id=q).values()
+        name={}
+        name["id"] = names[0]["id"];
+        name["fname"]=names[0]["fname"];
+        name["lname"] = names[0]["lname"];
+        name["email"] = names[0]["email"];
+        name["phone"] = names[0]["phone"];
+        name["age"]=names[0]["age"];
+        return render(request, 'BioInsert.html', {'names': name})
     if not q:
         error.append("Enter a search term ( It can not be empty) ")
     elif len(q) < 3:

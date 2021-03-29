@@ -9,7 +9,7 @@
 <p>Found {{ names|length }} name {{ names|pluralize }}.</p>
 <ul>
 {% for name in names %}
-<li>{{ name }}</li>
+    <li>{{ name }} : <a href="/biosearch/?id={{ name.id }}">Edit</a></li>
 {% endfor %}
 </ul>
 {% else %}
